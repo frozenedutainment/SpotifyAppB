@@ -113,3 +113,4 @@ if refresh_button or  st.session_state.refreshtoggle == 1:
 
         gems.add_ranking(st.session_state.user_id,cur_id, cur_name, wonder, transcendence, nostalgia, tenderness, joyful_activation, power, tension, sadness, peacefulness, bewertung)
         print("added", wonder, transcendence, nostalgia, tenderness, joyful_activation,power, tension, sadness, peacefulness, bewertung)
+        print("wow")
