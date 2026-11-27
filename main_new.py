@@ -5,7 +5,7 @@ from spotipy.cache_handler import MemoryCacheHandler
 
 client = st.secrets["SPOTIFY_CLIENT_ID"]
 secret = st.secrets["SPOTIFY_CLIENT_SECRET"]
-redir = "https://DEINE-APP.streamlit.app"  # Exakt wie im Spotify Dashboard!
+redir = "https://spotifyappb.streamlit.app/"  # Exakt wie im Spotify Dashboard!
 scope = "user-read-currently-playing"
 
 # Token nur im Session State dieses einen Nutzers speichern (keine .cache-Datei)
