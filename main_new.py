@@ -34,6 +34,8 @@ if not st.session_state.get("spotify_token"):
     st.link_button("🎧 Mit eigenem Spotify-Account verbinden", auth_url)
     st.stop()
 
+    #a
+
 # 3. Token ggf. automatisch erneuern & Spotipy starten
 token_info = auth_manager.validate_token(st.session_state["spotify_token"])
 st.session_state["spotify_token"] = token_info
