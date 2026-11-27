@@ -1,25 +1,43 @@
 import streamlit as st
-
-
-import data as data
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-import log_in
-
-if "user_id" not in st.session_state:
-    st.session_state.user_id = log_in.log_in()
+from spotipy.cache_handler import MemoryCacheHandler
 
 client = st.secrets["SPOTIFY_CLIENT_ID"]
 secret = st.secrets["SPOTIFY_CLIENT_SECRET"]
-redir = "http://127.0.0.1:8000/callback"
+redir = "https://DEINE-APP.streamlit.app"  # Exakt wie im Spotify Dashboard!
 scope = "user-read-currently-playing"
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
+# Token nur im Session State dieses einen Nutzers speichern (keine .cache-Datei)
+cache_handler = MemoryCacheHandler(token_info=st.session_state.get("spotify_token"))
+
+auth_manager = SpotifyOAuth(
     client_id=client,
     client_secret=secret,
     redirect_uri=redir,
-    scope=scope
-))
+    scope=scope,
+    cache_handler=cache_handler,
+    show_dialog=True  # Zeigt den Spotify-Login-Dialog für Account-Wechsel
+)
+
+# 1. Nutzer kommt gerade von Spotify zurück (URL enthält ?code=...)
+if "code" in st.query_params:
+    code = st.query_params["code"]
+    token_info = auth_manager.get_access_token(code, as_dict=True)
+    st.session_state["spotify_token"] = token_info
+    st.query_params.clear()
+    st.rerun()
+
+# 2. Nutzer ist noch nicht mit Spotify verbunden -> Login-Button zeigen
+if not st.session_state.get("spotify_token"):
+    auth_url = auth_manager.get_authorize_url()
+    st.link_button("🎧 Mit eigenem Spotify-Account verbinden", auth_url)
+    st.stop()
+
+# 3. Token ggf. automatisch erneuern & Spotipy starten
+token_info = auth_manager.validate_token(st.session_state["spotify_token"])
+st.session_state["spotify_token"] = token_info
+sp = spotipy.Spotify(auth=token_info["access_token"])
 
 
 gems = data.gems()

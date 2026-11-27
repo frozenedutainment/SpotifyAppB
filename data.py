@@ -7,7 +7,7 @@ import json
 from spotipy.oauth2 import SpotifyOAuth
 
 
-#a
+
 class spotify:
     def __init__(self):
         client = "9bd1a21279374ad09d28eec5b42406a4"
