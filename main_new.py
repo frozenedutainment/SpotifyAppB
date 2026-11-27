@@ -2,6 +2,7 @@ import streamlit as st
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from spotipy.cache_handler import MemoryCacheHandler
+import data
 
 client = st.secrets["SPOTIFY_CLIENT_ID"]
 secret = st.secrets["SPOTIFY_CLIENT_SECRET"]
