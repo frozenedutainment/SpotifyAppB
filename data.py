@@ -1,15 +1,11 @@
 import streamlit as st
 import spotipy
-import pandas as pd
 import sqlite3
 from datetime import datetime, timedelta, date
 from collections import Counter
 import json
 from spotipy.oauth2 import SpotifyOAuth
 
-
-
-from sphinx.util.display import progress_message
 
 
 class spotify:

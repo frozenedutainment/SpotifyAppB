@@ -1,7 +1,6 @@
 import streamlit as st
 
 
-import data_stuff as data
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
