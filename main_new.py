@@ -11,7 +11,7 @@ redir = "https://spotifyappb.streamlit.app/"  # Exakt wie im Spotify Dashboard!
 scope = "user-read-currently-playing"
 
 
-user_id = log_in.log_in()
+st.session_state.user_id = log_in.log_in()
 
 # Token nur im Session State dieses einen Nutzers speichern (keine .cache-Datei)
 cache_handler = MemoryCacheHandler(token_info=st.session_state.get("spotify_token"))
