@@ -3,11 +3,15 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from spotipy.cache_handler import MemoryCacheHandler
 import data
+import log_in
 
 client = st.secrets["SPOTIFY_CLIENT_ID"]
 secret = st.secrets["SPOTIFY_CLIENT_SECRET"]
 redir = "https://spotifyappb.streamlit.app/"  # Exakt wie im Spotify Dashboard!
 scope = "user-read-currently-playing"
+
+
+user_id = log_in.log_in()
 
 # Token nur im Session State dieses einen Nutzers speichern (keine .cache-Datei)
 cache_handler = MemoryCacheHandler(token_info=st.session_state.get("spotify_token"))
@@ -35,7 +39,7 @@ if not st.session_state.get("spotify_token"):
     st.link_button("🎧 Mit eigenem Spotify-Account verbinden", auth_url)
     st.stop()
 
-    #a
+
 
 # 3. Token ggf. automatisch erneuern & Spotipy starten
 token_info = auth_manager.validate_token(st.session_state["spotify_token"])
